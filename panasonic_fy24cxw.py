@@ -242,9 +242,9 @@ class SerialToNet(serial.threaded.Protocol):
 #                         logger.info('fan service: %s\n' % str(service.getJson()))
                 self.buff = []
                 
-                logger.debug('send data frame hex string for all socket clients')
-                for sck_client in self.client_threads:
-                    sck_client.client_socket.sendall(str(pocket)+'\n')
+#                 logger.debug('send data frame hex string for all socket clients')
+#                 for sck_client in self.client_threads:
+#                     sck_client.client_socket.sendall(str(pocket)+'\n')
 
 
 if __name__ == '__main__':  # noqa
