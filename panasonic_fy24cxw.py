@@ -177,6 +177,9 @@ class SerialQueueThread(threading.Thread):
                             pocket = dehumiditifer.service_write(dehumiditifer._srv_SAAControlSound, 
                                                                  int(value))
                         data = pocket()
+                    elif cmd.lower().find('humidity') == 0:
+                        pocket = dehumiditifer.service_read(dehumiditifer._srv_IndoorHumidityDisplay)
+                        data = pocket()
                     else:
                         # hex string to byte array
                         try:
@@ -242,9 +245,10 @@ class SerialToNet(serial.threaded.Protocol):
 #                         logger.info('fan service: %s\n' % str(service.getJson()))
                 self.buff = []
                 
-#                 logger.debug('send data frame hex string for all socket clients')
-#                 for sck_client in self.client_threads:
-#                     sck_client.client_socket.sendall(str(pocket)+'\n')
+                logger.debug('send data frame hex string for all socket clients')
+                for t in self.client_threads:
+                    if not t.stopped():
+                        t.client_socket.sendall(str(pocket)+'\n')
 
 
 if __name__ == '__main__':  # noqa
